@@ -6,11 +6,19 @@ const cors = require('cors');
 const PORT = process.env.PORT || 3003;  // Use a porta fornecida pelo ambiente
 
 app.use(express.json());
-app.use(cors({ 
-    origin: 'https://client-beta-sandy-18.vercel.app',
-    methods: ['GET', 'POST', 'PUT', 'DELETE' ],
-    allowedHeaders: [ 'Content-Type', 'Authorization'],
-  }));
+use((req, res, next) => {
+    
+  res.header('Access-Control-Allow-Origin', '*'); // Permite todas as origens
+  
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+
+   
+  res.header('Access-Control-Allow-Headers', 'Content-Type', 'Authorization');
+
+  app.use(cors());
+    
+  next();
+  });
 
 // Permita que o servidor use qualquer porta atribuída dinamicamente
 app.listen(PORT, () => {
