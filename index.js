@@ -7,9 +7,9 @@ const PORT = process.env.PORT || 3003;  // Use a porta fornecida pelo ambiente
 
 app.use(express.json());
 app.use(cors({ 
-    origin: 'https://client-beta-neon-28.vercel.app',
-    methods: [],
-    allowedHeaders: [],
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE' ],
+    allowedHeaders: [ 'Content-Type', 'Authorization'],
   }));
 
 // Permita que o servidor use qualquer porta atribuída dinamicamente
