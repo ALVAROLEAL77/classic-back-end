@@ -6,7 +6,7 @@ const cors = require('cors');
 const PORT = process.env.PORT || 3003;  // Use a porta fornecida pelo ambiente
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: '*' }));
 
 // Permita que o servidor use qualquer porta atribuída dinamicamente
 app.listen(PORT, () => {
