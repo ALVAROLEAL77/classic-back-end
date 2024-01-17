@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3003;  // Use a porta fornecida pelo ambiente
 
 app.use(express.json());
 app.use(cors({ 
-    origin: '*',
+    origin: 'https://client-beta-sandy-18.vercel.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE' ],
     allowedHeaders: [ 'Content-Type', 'Authorization'],
   }));
