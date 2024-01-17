@@ -5,8 +5,13 @@ const cors = require('cors');
 
 const PORT = process.env.PORT || 3003;  // Use a porta fornecida pelo ambiente
 
-app.use(express.json());
+app.use(express.json())
+
 use(cors());
+  
+
+  
+
 
 // Permita que o servidor use qualquer porta atribuída dinamicamente
 app.listen(PORT, () => {
@@ -33,12 +38,12 @@ app.post('/register', (req, res)=>{
     const sentPassword = req.body.Password
 
     // Lets create SLQ statement to insert the user to the Database table Users
-    const SLQ = 'INSERT INTO Users (email, username,password) VALUES (?,?,?)'
+    const SQL = 'INSERT INTO Users (email, username,password) VALUES (?,?,?)'
    //We are going to enter these values through a variable
    const Values = [sentEmail, sentUserName, sentPassword]
 
    // query to execute the sql statement stated above
-   db.query(SLQ, Values, (err, results)=>{
+   db.query(SQL, Values, (err, results)=>{
     if(err){
         res.send(err)
     }
@@ -59,11 +64,11 @@ app.post('/login', (req, res)=>{
         const sentLoginPassword = req.body.LoginPassword
     
         // Lets create SLQ statement to insert the user to the Database table Users
-        const SLQ = 'SELECT * FROM users WHERE username = ? && password = ?'
+        const SQL = 'SELECT * FROM users WHERE username = ? && password = ?'
        //We are going to enter these values through a variable
        const Values = [sentloginUserName, sentLoginPassword]
 
-       db.query(SLQ, Values, (err, results)=>{
+       db.query(SQL, Values, (err, results)=>{
         if(err){
             res.send({error: err})
         }
