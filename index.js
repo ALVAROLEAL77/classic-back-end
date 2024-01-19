@@ -74,12 +74,7 @@ app.post('/login', (req, res) => {
             res.status(500).send({ error: err });
         } else if (results.length > 0) {
             console.log('Usuário encontrado:', results);
-            
-            // Configure o cabeçalho CORS para o domínio específico
-            res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
-            // Permita credenciais (por exemplo, cookies) na resposta
-            res.header('Access-Control-Allow-Credentials', 'true');
-            // Envie os resultados
+            // A resposta será automaticamente configurada pelo middleware CORS global
             res.send(results);
         } else {
             console.log('Credenciais não existem!');
