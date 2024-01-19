@@ -15,6 +15,11 @@
         "dest": "./index.js"
       }
     ],
+    "headers": {
+      "Access-Control-Allow-Origin": "http://localhost:5174",
+      "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE",
+      "Access-Control-Allow-Headers": "Content-Type"
+    },
     "env": {
       "DB_USER": "root",
       "DB_HOST": "localhost",
@@ -22,3 +27,4 @@
       "DB_DATABASE": "plantdb"
     }
   }
+  
