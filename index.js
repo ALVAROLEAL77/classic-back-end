@@ -3,11 +3,12 @@ const app = express()
 const mysql = require('mysql')
 const cors = require('cors')
 
-
-app.use(cors({
-    origin: 'http://localhost:5174',
+const corsOptions = {
+    origin: ['http://localhost:5174', 'https://client-nu-green.vercel.app/'],
     credentials: true
-  }));
+  };
+  
+  app.use(cors(corsOptions));
 app.use(express.json());
 
 
