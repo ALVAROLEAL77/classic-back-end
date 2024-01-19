@@ -4,22 +4,34 @@
     "routes": [
       {
         "src": "/login",
-        "dest": "./index.js"
+        "dest": "./index.js",
+        "methods": ["POST"], 
+        "headers": [
+          { "key": "Access-Control-Allow-Origin", "value": "*" },
+          { "key": "Access-Control-Allow-Methods", "value": "POST,OPTIONS" },
+          { "key": "Access-Control-Allow-Headers", "value": "Content-Type" }
+        ]
       },
       {
         "src": "/register",
-        "dest": "./index.js"
+        "dest": "./index.js",
+        "methods": ["POST"],
+        "headers": [
+          { "key": "Access-Control-Allow-Origin", "value": "*" },
+          { "key": "Access-Control-Allow-Methods", "value": "POST,OPTIONS" },
+          { "key": "Access-Control-Allow-Headers", "value": "Content-Type" }
+        ]
       },
       {
         "src": "/(.*)",
-        "dest": "./index.js"
+        "dest": "./index.js",
+        "headers": [
+          { "key": "Access-Control-Allow-Origin", "value": "*" },
+          { "key": "Access-Control-Allow-Methods", "value": "GET,HEAD,PUT,PATCH,POST,DELETE" },
+          { "key": "Access-Control-Allow-Headers", "value": "*" }
+        ]
       }
     ],
-    "headers": {
-      "Access-Control-Allow-Origin": "http://localhost:5174",
-      "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE",
-      "Access-Control-Allow-Headers": "Content-Type"
-    },
     "env": {
       "DB_USER": "root",
       "DB_HOST": "localhost",
