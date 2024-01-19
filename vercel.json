@@ -1,18 +1,35 @@
 {
     "version": 2,
-    "builds": [{ "src": "index.js", "use": "@vercel/node" }],
+    "builds": [{ "src": "./index.js", "use": "@vercel/node" }],
     "routes": [
       {
         "src": "/login",
-        "dest": "./index.js"
+        "dest": "./index.js",
+        "methods": ["POST"], 
+        "headers": [
+          { "key": "Access-Control-Allow-Origin", "value": "*" },
+          { "key": "Access-Control-Allow-Methods", "value": "POST,OPTIONS" },
+          { "key": "Access-Control-Allow-Headers", "value": "Content-Type" }
+        ]
       },
       {
         "src": "/register",
-        "dest": "./index.js"
+        "dest": "./index.js",
+        "methods": ["POST"],
+        "headers": [
+          { "key": "Access-Control-Allow-Origin", "value": "*" },
+          { "key": "Access-Control-Allow-Methods", "value": "POST,OPTIONS" },
+          { "key": "Access-Control-Allow-Headers", "value": "Content-Type" }
+        ]
       },
       {
         "src": "/(.*)",
-        "dest": "./index.js"
+        "dest": "./index.js",
+        "headers": [
+          { "key": "Access-Control-Allow-Origin", "value": "*" },
+          { "key": "Access-Control-Allow-Methods", "value": "GET,HEAD,PUT,PATCH,POST,DELETE" },
+          { "key": "Access-Control-Allow-Headers", "value": "*" }
+        ]
       }
     ],
     "env": {
@@ -20,22 +37,7 @@
       "DB_HOST": "localhost",
       "DB_PASSWORD": "",
       "DB_DATABASE": "plantdb"
-    },
-
-    
-        "headers": [
-          {
-            "source": "/api/(.*)",
-            "headers": [
-              { "key": "Access-Control-Allow-Credentials", "value": "true" },
-              { "key": "Access-Control-Allow-Origin", "value": "*" },
-              { "key": "Access-Control-Allow-Methods", "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT" },
-              { "key": "Access-Control-Allow-Headers", "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version" }
-            ]
-          }
-        ]
-      
+    }
   }
-
   
   
