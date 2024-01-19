@@ -68,17 +68,21 @@ app.post('/login', (req, res)=>{
        //We are going to enter these values through a variable
        const Values = [sentloginUserName, sentLoginPassword]
 
-       db.query(SQL, Values, (err, results)=>{
-        if(err){
-            res.send({error: err})
-        }
-        if(results.length > 0){
-            res.send(results)
-        }
-        else{
-            res.send({message: `Credenciais não existem!`})
-        }
-       })
+       // Adicionamos logs para depuração
+    console.log('Executing SQL Query:', SQL);
+    console.log('Query Values:', Values);
 
-
-})
+    db.query(SQL, Values, (err, results) => {
+        if (err) {
+            console.error('Erro durante a consulta SQL:', err);
+            res.send({ error: err });
+        }
+        if (results.length > 0) {
+            console.log('Usuário encontrado:', results);
+            res.send(results);
+        } else {
+            console.log('Credenciais não existem!');
+            res.send({ message: 'Credenciais não existem!' });
+        }
+    });
+});
