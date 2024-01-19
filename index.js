@@ -58,17 +58,13 @@ app.post('/register', (req, res)=>{
 
 //Now we need to Login with these credentials from o registered User
 // Lets create another route
-app.post('/login', (req, res)=>{
-        // We need to get variables sent from the form
-        const sentloginUserName = req.body.LoginUserName
-        const sentLoginPassword = req.body.LoginPassword
-    
-        // Lets create SLQ statement to insert the user to the Database table Users
-        const SQL = 'SELECT * FROM users WHERE username = ? && password = ?'
-       //We are going to enter these values through a variable
-       const Values = [sentloginUserName, sentLoginPassword]
+app.post('/login', (req, res) => {
+    const sentloginUserName = req.body.LoginUserName;
+    const sentLoginPassword = req.body.LoginPassword;
 
-       // Adicionamos logs para depuração
+    const SQL = 'SELECT * FROM users WHERE username = ? AND password = ?';
+    const Values = [sentloginUserName, sentLoginPassword];
+
     console.log('Executing SQL Query:', SQL);
     console.log('Query Values:', Values);
 
@@ -76,9 +72,9 @@ app.post('/login', (req, res)=>{
         if (err) {
             console.error('Erro durante a consulta SQL:', err);
             res.send({ error: err });
-        }
-        if (results.length > 0) {
+        } else if (results.length > 0) {
             console.log('Usuário encontrado:', results);
+            // Os cabeçalhos CORS já são configurados pelo middleware cors
             res.send(results);
         } else {
             console.log('Credenciais não existem!');
