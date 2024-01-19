@@ -7,22 +7,18 @@ const PORT = process.env.PORT || 3003;  // Use a porta fornecida pelo ambiente
 
 app.use(express.json())
 
-const corsOptions = {
-    origin: 'http://localhost:5173',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
-    optionsSuccessStatus: 204,
-  };
-  
-  app.use(cors(corsOptions));
-
-  
-
-
-// Permita que o servidor use qualquer porta atribuída dinamicamente
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+// Configurações CORS
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
+    res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
 });
+  
+
+
+
 
 // Use variáveis de ambiente para configurar a conexão com o banco de dados em produção
 const db = mysql.createConnection({
@@ -88,3 +84,8 @@ app.post('/login', (req, res)=>{
 
 
 })
+
+// Permita que o servidor use qualquer porta atribuída dinamicamente
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
