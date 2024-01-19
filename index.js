@@ -1,33 +1,23 @@
-const express = require('express');
-const app = express();
-const mysql = require('mysql');
-const cors = require('cors');
-app.use(cors());
-
-const PORT = process.env.PORT || 3003;  // Use a porta fornecida pelo ambiente
+const express = require('express')
+const app = express()
+const mysql = require('mysql')
+const cors = require('cors')
 
 app.use(express.json())
+app.use(cors())
 
-  
+// let us the server
+app.listen(3002, ()=>{
+    console.log('Server is running on port 3002')
+})
 
-  
-
-
-// Permita que o servidor use qualquer porta atribuída dinamicamente
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
-
-// Use variáveis de ambiente para configurar a conexão com o banco de dados em produção
+//let us create our database (mysql)
 const db = mysql.createConnection({
-    user: process.env.DB_USER || 'root',
-    host: process.env.DB_HOST || 'localhost',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_DATABASE || 'plantdb',
-});
-
-// Resto do seu código...
-
+    user: 'root',
+    host: 'localhost',
+    password: '', //if you hove set xampp password please enter it here
+    database: 'plantdb',
+})
 
 // let us now create a route to the server that will register a user.
 
@@ -38,12 +28,12 @@ app.post('/register', (req, res)=>{
     const sentPassword = req.body.Password
 
     // Lets create SLQ statement to insert the user to the Database table Users
-    const SQL = 'INSERT INTO Users (email, username,password) VALUES (?,?,?)'
+    const SLQ = 'INSERT INTO Users (email, username,password) VALUES (?,?,?)'
    //We are going to enter these values through a variable
    const Values = [sentEmail, sentUserName, sentPassword]
 
    // query to execute the sql statement stated above
-   db.query(SQL, Values, (err, results)=>{
+   db.query(SLQ, Values, (err, results)=>{
     if(err){
         res.send(err)
     }
@@ -58,27 +48,28 @@ app.post('/register', (req, res)=>{
 
 //Now we need to Login with these credentials from o registered User
 // Lets create another route
-app.post('/login', (req, res) => {
-    const sentloginUserName = req.body.LoginUserName;
-    const sentLoginPassword = req.body.LoginPassword;
+app.post('/login', (req, res)=>{
+        // We need to get variables sent from the form
+        const sentloginUserName = req.body.LoginUserName
+        const sentLoginPassword = req.body.LoginPassword
+    
+        // Lets create SLQ statement to insert the user to the Database table Users
+        const SLQ = 'SELECT * FROM users WHERE username = ? && password = ?'
+       //We are going to enter these values through a variable
+       const Values = [sentloginUserName, sentLoginPassword]
 
-    const SQL = 'SELECT * FROM users WHERE username = ? AND password = ?';
-    const Values = [sentloginUserName, sentLoginPassword];
-
-    console.log('Executing SQL Query:', SQL);
-    console.log('Query Values:', Values);
-
-    db.query(SQL, Values, (err, results) => {
-        if (err) {
-            console.error('Erro durante a consulta SQL:', err);
-            res.status(500).send({ error: err });
-        } else if (results.length > 0) {
-            console.log('Usuário encontrado:', results);
-            // A resposta será automaticamente configurada pelo middleware CORS global
-            res.send(results);
-        } else {
-            console.log('Credenciais não existem!');
-            res.status(401).send({ message: 'Credenciais não existem!' });
+       db.query(SLQ, Values, (err, results)=>{
+        if(err){
+            res.send({error: err})
         }
-    });
-});
+        if(results.length > 0){
+            res.send(results)
+        }
+        else{
+            res.send({message: `Credenciais não existem!`})
+        }
+       })
+
+
+})
+
