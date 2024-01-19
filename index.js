@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3003;  // Use a porta fornecida pelo ambiente
 
 app.use(express.json())
 
-use(cors());
+app.use(cors());
   
 
   
