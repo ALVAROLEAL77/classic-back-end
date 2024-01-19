@@ -71,14 +71,19 @@ app.post('/login', (req, res) => {
     db.query(SQL, Values, (err, results) => {
         if (err) {
             console.error('Erro durante a consulta SQL:', err);
-            res.send({ error: err });
+            res.status(500).send({ error: err });
         } else if (results.length > 0) {
             console.log('Usuário encontrado:', results);
-            // Os cabeçalhos CORS já são configurados pelo middleware cors
+            
+            // Configure o cabeçalho CORS para o domínio específico
+            res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
+            // Permita credenciais (por exemplo, cookies) na resposta
+            res.header('Access-Control-Allow-Credentials', 'true');
+            // Envie os resultados
             res.send(results);
         } else {
             console.log('Credenciais não existem!');
-            res.send({ message: 'Credenciais não existem!' });
+            res.status(401).send({ message: 'Credenciais não existem!' });
         }
     });
 });
